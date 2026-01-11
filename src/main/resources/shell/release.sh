@@ -58,8 +58,8 @@ if [ ! -f "${TARGET_ZIP_PATH}" ]; then
 	run exit 1;	
 fi
 
-# リリース対象資材を履歴ディレクトリ配下に移動する
-echo "moving target zip to history dir."
+# リリース対象資材を履歴ディレクトリ配下にコピーする
+echo "copy target zip to history dir."
 run cp -p "${TARGET_ZIP_PATH}" "${HISTORY_DIR}/${CURRENT_DATE}/${RESOURCE_DIR}/"
 run ls -la "${HISTORY_DIR}/${CURRENT_DATE}/${RESOURCE_DIR}"
 
@@ -81,33 +81,33 @@ echo "unzip target zip."
 run unzip "${HISTORY_DIR}/${CURRENT_DATE}/${RESOURCE_DIR}/${TARGET_ZIP}" -d "${HISTORY_DIR}/${CURRENT_DATE}/${RESOURCE_DIR}"
 run ls -la "${HISTORY_DIR}/${CURRENT_DATE}/${RESOURCE_DIR}"
 
-# 現在の資源をバックアップディレクトリに移動する
+# 現在の資源をバックアップディレクトリにコピーする
 echo "backup current programs and setting files."
 if find "${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${BIN_DIR}" -mindepth 1 -maxdepth 1 | read _; then
-	run mv ${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${BIN_DIR}/* ${HISTORY_DIR}/${CURRENT_DATE}/${BACKUP_DIR}/${ASYNC_DIR}/${BIN_DIR}
+	run cp -p ${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${BIN_DIR}/* ${HISTORY_DIR}/${CURRENT_DATE}/${BACKUP_DIR}/${ASYNC_DIR}/${BIN_DIR}
 	run ls -la ${HISTORY_DIR}/${CURRENT_DATE}/${BACKUP_DIR}/${ASYNC_DIR}/${BIN_DIR}
 fi
 if find "${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${CONF_DIR}" -mindepth 1 -maxdepth 1 | read _; then
-	run mv ${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${CONF_DIR}/* ${HISTORY_DIR}/${CURRENT_DATE}/${BACKUP_DIR}/${ASYNC_DIR}/${CONF_DIR}
+	run cp -p ${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${CONF_DIR}/* ${HISTORY_DIR}/${CURRENT_DATE}/${BACKUP_DIR}/${ASYNC_DIR}/${CONF_DIR}
 	run ls -la ${HISTORY_DIR}/${CURRENT_DATE}/${BACKUP_DIR}/${ASYNC_DIR}/${CONF_DIR}
 fi
 if find "${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${SHELL_DIR}" -mindepth 1 -maxdepth 1 | read _; then
-	run mv ${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${SHELL_DIR}/* ${HISTORY_DIR}/${CURRENT_DATE}/${BACKUP_DIR}/${ASYNC_DIR}/${SHELL_DIR}
+	run cp -p ${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${SHELL_DIR}/* ${HISTORY_DIR}/${CURRENT_DATE}/${BACKUP_DIR}/${ASYNC_DIR}/${SHELL_DIR}
 	run ls -la ${HISTORY_DIR}/${CURRENT_DATE}/${BACKUP_DIR}/${ASYNC_DIR}/${SHELL_DIR}
 fi
 
 # リリース資源を配置する
 echo "release programs and setting files."
 if find "${HISTORY_DIR}/${CURRENT_DATE}/${RESOURCE_DIR}/${ASYNC_DIR}/${BIN_DIR}" -mindepth 1 -maxdepth 1 | read _; then
-	run cp -p ${HISTORY_DIR}/${CURRENT_DATE}/${RESOURCE_DIR}/${ASYNC_DIR}/${BIN_DIR}/* ${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${BIN_DIR}
+	run cp -pf ${HISTORY_DIR}/${CURRENT_DATE}/${RESOURCE_DIR}/${ASYNC_DIR}/${BIN_DIR}/* ${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${BIN_DIR}
 	run ls -la "${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${BIN_DIR}"
 fi
 if find "${HISTORY_DIR}/${CURRENT_DATE}/${RESOURCE_DIR}/${ASYNC_DIR}/${CONF_DIR}" -mindepth 1 -maxdepth 1 | read _; then
-	run cp -p ${HISTORY_DIR}/${CURRENT_DATE}/${RESOURCE_DIR}/${ASYNC_DIR}/${CONF_DIR}/* ${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${CONF_DIR}
+	run cp -pf ${HISTORY_DIR}/${CURRENT_DATE}/${RESOURCE_DIR}/${ASYNC_DIR}/${CONF_DIR}/* ${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${CONF_DIR}
 	run ls -la "${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${CONF_DIR}"
 fi
 if find "${HISTORY_DIR}/${CURRENT_DATE}/${RESOURCE_DIR}/${ASYNC_DIR}/${SHELL_DIR}" -mindepth 1 -maxdepth 1 | read _; then
-	run cp -p ${HISTORY_DIR}/${CURRENT_DATE}/${RESOURCE_DIR}/${ASYNC_DIR}/${SHELL_DIR}/* ${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${SHELL_DIR}
+	run cp -pf ${HISTORY_DIR}/${CURRENT_DATE}/${RESOURCE_DIR}/${ASYNC_DIR}/${SHELL_DIR}/* ${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${SHELL_DIR}
 	run ls -la "${RELEASE_TARGET_DIR}/${ASYNC_DIR}/${SHELL_DIR}"
 fi
 
